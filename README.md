@@ -5,3 +5,4 @@ This repository contains a weather application that provides real-time weather i
 Temperature: Current temperature in Celsius.
 Wind Speed: Current wind speed in km/h.
 Humidity: Current humidity percentage.
+# WeatherWise
