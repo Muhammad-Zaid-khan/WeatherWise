@@ -944,4 +944,12 @@ color: var(--text-color);
         padding: 5px 0;
     }
 }
+@media (max-width: 600px) {
+  .weather-details-grid {
+     display: flex;
+     flex-wrap: wrap;
+     gap: 10px;
+     flex: 1 1 48%; 
+  }
+}
 }
