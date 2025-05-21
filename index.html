@@ -2,47 +2,165 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>WeatherWise</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="theme-toggle">
+        <button id="themeToggle" aria-label="Toggle dark/light mode">
+            <span class="sun-icon">☀️</span>
+            <span class="moon-icon">🌙</span>
+        </button>
+    </div>
     <div class="card">
         <div class="search">
-            <input type="text" placeholder="Enter city name" spellcheck="false">
-            <button><img src="images/search.png" ></button>
+            <input type="text" id="cityInput" placeholder="Enter city name" spellcheck="false">
+            <button id="searchBtn"><img src="images/search.png" alt="Search"></button>
         </div>
-        <div class="error">
+        <div class="error" id="error">
             <p>Invalid City name</p>
         </div>
         <div class="weather-detials">
-        <div class="weather">
-            <img src="images/rain.png" class="weather-icon" >
-            <h1 class="temp">29°C</h1>
-            <h3 class="city">Islambad</h3> 
-        </div>
-        <div class="detials">
-           <div class="col">
-            <img src="images/humidity.png" >
-            <div class="humidity">
-                <h2 class="humidity-per">77%</h2>
-                <h3>Humidity</h3>
+            <div class="weather">
+                <div class="weather-info">
+                    <img src="images/rain.png" class="weather-icon" alt="Weather">
+                    <div class="weather-details">
+                        <h1 class="temp">29°C</h1>
+                        <h3 class="city">Islambad</h3>
+                        <p class="weather-desc">Mostly Cloudy</p>
+                    </div>
+                </div>
+                <div class="time-info">
+                    <p class="current-time">15:49</p>
+                    <p class="date">19 May 2025</p>
+                </div>
             </div>
-           </div>
-           <div class="col">
-            <img src="images/wind.png" > 
-            <div class="wind">
-                <h2 class="wind-speed">10 km/h</h2>
-                <h3 >Wind Speed</h3>
+            <div class="weather-metrics">
+                <div class="metric-item">
+                    <span class="metric-label">UV Index</span>
+                    <span class="metric-value">3</span>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-label">Visibility</span>
+                    <span class="metric-value">10 km</span>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-label">Humidity</span>
+                    <span class="metric-value">77%</span>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-label">Wind Speed</span>
+                    <span class="metric-value">10 km/h</span>
+                </div>
             </div>
-           </div>
+            <div class="weather-details-grid">
+                <div class="weather-detail">
+                    <img src="images/humidity.png" alt="Humidity">
+                    <div class="detail-content">
+                        <h2 class="humidity-per">77%</h2>
+                        <h3>Humidity</h3>
+                    </div>
+                </div>
+                <div class="weather-detail">
+                    <img src="images/wind.png" alt="Wind">
+                    <div class="detail-content">
+                        <h2 class="wind-speed">10 km/h</h2>
+                        <h3>Wind Speed</h3>
+                    </div>
+                </div>
+                <div class="weather-detail">
+                    <img src="images/visibality.png" alt="Visibility">
+                    <div class="detail-content">
+                        <h2 class="visibility">10 km</h2>
+                        <h3>Visibility</h3>
+                    </div>
+                </div>
+                <div class="weather-detail">
+                    <img src="images/uv.png" alt="UV Index">
+                    <div class="detail-content">
+                        <h2 class="uv-index">3</h2>
+                        <h3>UV Index</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="additional-info">
+                <div class="sun-info">
+                    <div class="sunrise">
+                        <img src="./images/sunrise.png" alt="Sunrise">
+                        <div>
+                            <h3>Sunrise</h3>
+                            <p class="sunrise-time">05:30 AM</p>
+                        </div>
+                    </div>
+                    <div class="sunset">
+                        <img src="./images/sunset.png" alt="Sunset">
+                        <div>
+                            <h3>Sunset</h3>
+                            <p class="sunset-time">06:45 PM</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="feels-like">
+                    <img src="./images/hot.png" alt="Feels Like">
+                    <div>
+                        <h3>Feels Like</h3>
+                        <p class="feels-temp">25°C</p>
+                    </div>
+                </div>
+            </div>
+            <div class="forecast-container">
+                <h2>5-Day Weather Forecast</h2>
+                <div class="location-btn" onclick="getLocationWeather()">
+                    <img src="./images/placeholder.png" alt="Location" class="location-icon">
+                    <div class="location-content">
+                        <span>Use Current Location</span>
+                        <img src="./images/navigation.png" alt="Location Arrow" class="location-arrow">
+                    </div>
+                </div>
+                <div class="forecast-list">
+                    <!-- Forecast cards will be inserted here -->
+                </div>
+            </div>
+            <div class="forecast-navigation">
+                <button class="prev-day" aria-label="Previous day forecast">
+                    <span class="nav-text">Previous Day</span>
+                    <img src="./images/previous.png" class="icon" alt="">
+                  
+                </button>
+                <button class="next-day" aria-label="Next day forecast">
+                  <img 
+                    src="./images/next.png" 
+                    class="icon"
+                    alt="">
+                    <span class="nav-text">Next Day</span>
+                    <!-- <span class="nav-icon">→</span> -->
+                </button>
+            </div>
+            <div class="weather-tips">
+                <h2>Weather Tips</h2>
+                <div class="tips-container">
+                    <div class="tip-item" id="tip0">
+                        <img src='./images/humidity.png' alt="Tip 1">
+                        <div>
+                            <h3>Stay Hydrated</h3>
+                            <p>Drink plenty of water to stay hydrated.</p>
+                        </div>
+                    </div>
+                    <div class="tip-item" id="tip1" >
+                        <img src='./images/sunscreen.png' alt="Tip 2">
+                        <div>
+                            <h3>Wear Sunscreen</h3>
+                            <p>Apply sunscreen with SPF 30 or higher.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    </div>
-
 
     <script src="app.js"></script>
 </body>
