@@ -2,7 +2,7 @@
 console.log("WeatherWise is ready!");
 
 // API configuration
-const ApiUrl = "http://api.weatherapi.com/v1/";
+const ApiUrl = "https://api.weatherapi.com/v1/";
 const ApiKey = "c51a68b5a56945d0b7f64550242508";
 const tip0=document.getElementById("tip0");
 const tip1=document.getElementById("tip1");
