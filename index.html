@@ -3,165 +3,325 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>WeatherWise</title>
+    <title>WeatherWise Pro</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="icon" type="image/png" href="./images/logo.png">
 </head>
-<body>
-    <div class="theme-toggle">
-        <button id="themeToggle" aria-label="Toggle dark/light mode">
-            <span class="sun-icon">☀️</span>
-            <span class="moon-icon">🌙</span>
-        </button>
+<body data-theme="dark">
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="weather-loader">
+                <div class="cloud">
+                    <div class="cloud-part"></div>
+                    <div class="cloud-part"></div>
+                    <div class="cloud-part"></div>
+                </div>
+                <div class="rain">
+                    <div class="drop"></div>
+                    <div class="drop"></div>
+                    <div class="drop"></div>
+                    <div class="drop"></div>
+                </div>
+            </div>
+            <h2>WeatherWise Pro</h2>
+            <p>Loading weather data...</p>
+        </div>
     </div>
-    <div class="card">
-        <div class="search">
-            <input type="text" id="cityInput" placeholder="Enter city name" spellcheck="false">
-            <button id="searchBtn"><img src="images/search.png" alt="Search"></button>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <img src="./images/logo.png" alt="WeatherWise" class="nav-logo">
+                <span class="nav-title">WeatherWise Pro</span>
+            </div>
+            <div class="nav-controls">
+                <button class="units-toggle" id="unitsToggle">°C</button>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode">
+                    <span class="sun-icon">☀️</span>
+                    <span class="moon-icon">🌙</span>
+                </button>
+            </div>
         </div>
-        <div class="error" id="error">
-            <p>Invalid City name</p>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Search Section -->
+        <div class="search-section">
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" id="cityInput" placeholder="Search for a city..." spellcheck="false">
+                    <button id="searchBtn" class="search-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                    </button>
+                </div>
+                <button class="location-btn" id="locationBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                    <span>Current Location</span>
+                </button>
+            </div>
+            
+            <!-- Recent Searches -->
+            <div class="recent-searches" id="recentSearches">
+                <h3>Recent Searches</h3>
+                <div class="recent-list" id="recentList"></div>
+            </div>
         </div>
-        <div class="weather-detials">
-            <div class="weather">
-                <div class="weather-info">
-                    <img src="images/rain.png" class="weather-icon" alt="Weather">
-                    <div class="weather-details">
-                        <h1 class="temp">29°C</h1>
-                        <h3 class="city">Islambad</h3>
-                        <p class="weather-desc">Mostly Cloudy</p>
+
+        <!-- Error Message -->
+        <div class="error-container" id="errorContainer">
+            <div class="error-content">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="15" y1="9" x2="9" y2="15"></line>
+                    <line x1="9" y1="9" x2="15" y2="15"></line>
+                </svg>
+                <p id="errorMessage">City not found. Please try again.</p>
+            </div>
+        </div>
+
+        <!-- Weather Card -->
+        <div class="weather-card" id="weatherCard">
+            <!-- Current Weather -->
+            <div class="current-weather">
+                <div class="weather-main">
+                    <div class="weather-info">
+                        <div class="location-info">
+                            <h1 class="city-name" id="cityName">New York</h1>
+                            <p class="country-region" id="countryRegion">United States</p>
+                            <p class="last-updated" id="lastUpdated">Last updated: 2 minutes ago</p>
+                        </div>
+                        <div class="temperature-display">
+                            <div class="main-temp" id="mainTemp">22°C</div>
+                            <div class="feels-like">Feels like <span id="feelsLike">25°C</span></div>
+                        </div>
+                    </div>
+                    <div class="weather-visual">
+                        <img src="images/clear.png" alt="Weather" class="weather-icon" id="weatherIcon">
+                        <p class="weather-condition" id="weatherCondition">Clear Sky</p>
                     </div>
                 </div>
-                <div class="time-info">
-                    <p class="current-time">15:49</p>
-                    <p class="date">19 May 2025</p>
+                
+                <!-- Current Time & Date -->
+                <div class="time-date-display">
+                    <div class="current-time" id="currentTime">15:30</div>
+                    <div class="current-date" id="currentDate">Monday, June 16, 2025</div>
                 </div>
             </div>
-            <div class="weather-metrics">
-                <div class="metric-item">
-                    <span class="metric-label">UV Index</span>
-                    <span class="metric-value">3</span>
-                </div>
-                <div class="metric-item">
-                    <span class="metric-label">Visibility</span>
-                    <span class="metric-value">10 km</span>
-                </div>
-                <div class="metric-item">
-                    <span class="metric-label">Humidity</span>
-                    <span class="metric-value">77%</span>
-                </div>
-                <div class="metric-item">
-                    <span class="metric-label">Wind Speed</span>
-                    <span class="metric-value">10 km/h</span>
+
+            <!-- Weather Details Grid -->
+            <div class="weather-details-section">
+                <h2 class="section-title">Weather Details</h2>
+                <div class="details-grid">
+                    <div class="detail-card">
+                        <div class="detail-header">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2v2"></path>
+                                <path d="m4.93 4.93 1.41 1.41"></path>
+                                <path d="M20 12h2"></path>
+                                <path d="m19.07 4.93-1.41 1.41"></path>
+                                <path d="M15.947 12.65a4 4 0 0 0-5.925-4.128"></path>
+                                <path d="M13 22H7a5 5 0 1 1 4.9-6H13a3 3 0 0 1 0 6z"></path>
+                            </svg>
+                            <span class="detail-label">UV Index</span>
+                        </div>
+                        <div class="detail-value" id="uvIndex">3</div>
+                        <div class="detail-description" id="uvDescription">Moderate</div>
+                    </div>
+
+                    <div class="detail-card">
+                        <div class="detail-header">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 12s2-2 4-2 4 2 4 2"></path>
+                                <path d="M12 8v8"></path>
+                                <path d="M8 20s-4-6-4-10a8 8 0 1 1 16 0c0 4-4 10-4 10"></path>
+                            </svg>
+                            <span class="detail-label">Humidity</span>
+                        </div>
+                        <div class="detail-value" id="humidity">65%</div>
+                        <div class="detail-description" id="humidityDescription">Comfortable</div>
+                    </div>
+
+                    <div class="detail-card">
+                        <div class="detail-header">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path>
+                            </svg>
+                            <span class="detail-label">Wind Speed</span>
+                        </div>
+                        <div class="detail-value" id="windSpeed">15 km/h</div>
+                        <div class="detail-description" id="windDirection">NE</div>
+                    </div>
+
+                    <div class="detail-card">
+                        <div class="detail-header">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 4.5V9a3 3 0 0 0 3 3h4.5"></path>
+                                <path d="M12 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"></path>
+                            </svg>
+                            <span class="detail-label">Visibility</span>
+                        </div>
+                        <div class="detail-value" id="visibility">10 km</div>
+                        <div class="detail-description">Clear view</div>
+                    </div>
+
+                    <div class="detail-card">
+                        <div class="detail-header">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 6V2H8"></path>
+                                <path d="m8 18-4 4V8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2Z"></path>
+                            </svg>
+                            <span class="detail-label">Pressure</span>
+                        </div>
+                        <div class="detail-value" id="pressure">1013 mb</div>
+                        <div class="detail-description" id="pressureDescription">Normal</div>
+                    </div>
+
+                    <div class="detail-card">
+                        <div class="detail-header">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="5"></circle>
+                                <line x1="12" y1="1" x2="12" y2="3"></line>
+                                <line x1="12" y1="21" x2="12" y2="23"></line>
+                                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                                <line x1="1" y1="12" x2="3" y2="12"></line>
+                                <line x1="21" y1="12" x2="23" y2="12"></line>
+                                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                            </svg>
+                            <span class="detail-label">Dew Point</span>
+                        </div>
+                        <div class="detail-value" id="dewPoint">18°C</div>
+                        <div class="detail-description">Comfortable</div>
+                    </div>
                 </div>
             </div>
-            <div class="weather-details-grid">
-                <div class="weather-detail">
-                    <img src="images/humidity.png" alt="Humidity">
-                    <div class="detail-content">
-                        <h2 class="humidity-per">77%</h2>
-                        <h3>Humidity</h3>
-                    </div>
-                </div>
-                <div class="weather-detail">
-                    <img src="images/wind.png" alt="Wind">
-                    <div class="detail-content">
-                        <h2 class="wind-speed">10 km/h</h2>
-                        <h3>Wind Speed</h3>
-                    </div>
-                </div>
-                <div class="weather-detail">
-                    <img src="images/visibality.png" alt="Visibility">
-                    <div class="detail-content">
-                        <h2 class="visibility">10 km</h2>
-                        <h3>Visibility</h3>
-                    </div>
-                </div>
-                <div class="weather-detail">
-                    <img src="images/uv.png" alt="UV Index">
-                    <div class="detail-content">
-                        <h2 class="uv-index">3</h2>
-                        <h3>UV Index</h3>
-                    </div>
-                </div>
-            </div>
-            <div class="additional-info">
-                <div class="sun-info">
-                    <div class="sunrise">
-                        <img src="./images/sunrise.png" alt="Sunrise">
-                        <div>
+
+            <!-- Sun & Moon Section -->
+            <div class="astronomy-section">
+                <h2 class="section-title">Sun & Moon</h2>
+                <div class="astronomy-grid">
+                    <div class="astronomy-card">
+                        <div class="astro-header">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="5"></circle>
+                                <line x1="12" y1="1" x2="12" y2="3"></line>
+                                <line x1="12" y1="21" x2="12" y2="23"></line>
+                                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                                <line x1="1" y1="12" x2="3" y2="12"></line>
+                                <line x1="21" y1="12" x2="23" y2="12"></line>
+                                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                            </svg>
                             <h3>Sunrise</h3>
-                            <p class="sunrise-time">05:30 AM</p>
                         </div>
+                        <div class="astro-time" id="sunriseTime">06:30 AM</div>
                     </div>
-                    <div class="sunset">
-                        <img src="./images/sunset.png" alt="Sunset">
-                        <div>
+                    
+                    <div class="astronomy-card">
+                        <div class="astro-header">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="5"></circle>
+                                <line x1="12" y1="1" x2="12" y2="3"></line>
+                                <line x1="12" y1="21" x2="12" y2="23"></line>
+                                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                                <line x1="1" y1="12" x2="3" y2="12"></line>
+                                <line x1="21" y1="12" x2="23" y2="12"></line>
+                                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                            </svg>
                             <h3>Sunset</h3>
-                            <p class="sunset-time">06:45 PM</p>
                         </div>
+                        <div class="astro-time" id="sunsetTime">07:45 PM</div>
                     </div>
-                </div>
-                <div class="feels-like">
-                    <img src="./images/hot.png" alt="Feels Like">
-                    <div>
-                        <h3>Feels Like</h3>
-                        <p class="feels-temp">25°C</p>
+
+                    <div class="astronomy-card">
+                        <div class="astro-header">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                            </svg>
+                            <h3>Moon Phase</h3>
+                        </div>
+                        <div class="astro-time" id="moonPhase">Waxing Crescent</div>
+                    </div>
+
+                    <div class="astronomy-card">
+                        <div class="astro-header">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12,6 12,12 16,14"></polyline>
+                            </svg>
+                            <h3>Day Length</h3>
+                        </div>
+                        <div class="astro-time" id="dayLength">13h 15m</div>
                     </div>
                 </div>
             </div>
-            <div class="forecast-container">
-                <h2>5-Day Weather Forecast</h2>
-                <div class="location-btn" onclick="getLocationWeather()">
-                    <img src="./images/placeholder.png" alt="Location" class="location-icon">
-                    <div class="location-content">
-                        <span>Use Current Location</span>
-                        <img src="./images/navigation.png" alt="Location Arrow" class="location-arrow">
+
+            <!-- Hourly Forecast -->
+            <div class="hourly-section">
+                <h2 class="section-title">24-Hour Forecast</h2>
+                <div class="hourly-scroll-container">
+                    <div class="hourly-forecast" id="hourlyForecast">
+                        <!-- Hourly forecast cards will be generated here -->
                     </div>
                 </div>
-                <div class="forecast-list">
-                    <!-- Forecast cards will be inserted here -->
+            </div>
+
+            <!-- 7-Day Forecast -->
+            <div class="forecast-section">
+                <h2 class="section-title">7-Day Forecast</h2>
+                <div class="forecast-list" id="forecastList">
+                    <!-- Daily forecast cards will be generated here -->
                 </div>
             </div>
-            <div class="forecast-navigation">
-                <button class="prev-day" aria-label="Previous day forecast">
-                    <span class="nav-text">Previous Day</span>
-                    <img src="./images/previous.png" class="icon" alt="">
-                  
-                </button>
-                <button class="next-day" aria-label="Next day forecast">
-                  <img 
-                    src="./images/next.png" 
-                    class="icon"
-                    alt="">
-                    <span class="nav-text">Next Day</span>
-                    <!-- <span class="nav-icon">→</span> -->
-                </button>
+
+            <!-- Weather Insights -->
+            <div class="insights-section">
+                <h2 class="section-title">Weather Insights</h2>
+                <div class="insights-grid" id="insightsGrid">
+                    <!-- Weather insights will be generated here -->
+                </div>
             </div>
-            <div class="weather-tips">
-                <h2>Weather Tips</h2>
-                <div class="tips-container">
-                    <div class="tip-item" id="tip0">
-                        <img src='./images/humidity.png' alt="Tip 1">
-                        <div>
-                            <h3>Stay Hydrated</h3>
-                            <p>Drink plenty of water to stay hydrated.</p>
-                        </div>
+
+            <!-- Air Quality (if available) -->
+            <div class="air-quality-section" id="airQualitySection" style="display: none;">
+                <h2 class="section-title">Air Quality</h2>
+                <div class="air-quality-card">
+                    <div class="aqi-display">
+                        <div class="aqi-value" id="aqiValue">--</div>
+                        <div class="aqi-label" id="aqiLabel">AQI</div>
                     </div>
-                    <div class="tip-item" id="tip1" >
-                        <img src='./images/sunscreen.png' alt="Tip 2">
-                        <div>
-                            <h3>Wear Sunscreen</h3>
-                            <p>Apply sunscreen with SPF 30 or higher.</p>
-                        </div>
+                    <div class="aqi-details">
+                        <div class="aqi-description" id="aqiDescription">Air quality data unavailable</div>
+                        <div class="pollutants" id="pollutants"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="19" x2="12" y2="5"></line>
+            <polyline points="5,12 12,5 19,12"></polyline>
+        </svg>
+    </button>
 
     <script src="app.js"></script>
 </body>
